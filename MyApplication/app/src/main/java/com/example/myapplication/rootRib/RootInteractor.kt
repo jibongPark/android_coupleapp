@@ -19,6 +19,8 @@ class RootInteractor : Interactor<RootInteractor.RootRibPresenter, RootRouter>()
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
 
+    router.attachLoggedOut();
+
     // TODO: Add attachment logic here (RxSubscriptions, etc.).
   }
 

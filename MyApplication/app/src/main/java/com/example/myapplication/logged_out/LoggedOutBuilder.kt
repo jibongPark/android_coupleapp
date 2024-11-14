@@ -1,9 +1,8 @@
-package com.example.myapplication.rootRib
+package com.example.myapplication.logged_out
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.myapplication.R
-import com.example.myapplication.logged_out.LoggedOutBuilder
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -15,32 +14,33 @@ import javax.inject.Qualifier
 import javax.inject.Scope
 
 /**
- * Builder for the {@link RootRibScope}.
+ * Builder for the {@link LoggedOutScope}.
  *
  * TODO describe this scope's responsibility as a whole.
  */
-class RootBuilder(dependency: ParentComponent) : ViewBuilder<RootView, RootRouter, RootBuilder.ParentComponent>(dependency) {
+open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOutView, LoggedOutRouter, LoggedOutBuilder.ParentComponent>(dependency) {
 
   /**
-   * Builds a new [RootRouter].
+   * Builds a new [LoggedOutRouter].
    *
    * @param parentViewGroup parent view group that this router's view will be added to.
-   * @return a new [RootRouter].
+   * @return a new [LoggedOutRouter].
    */
-  fun build(parentViewGroup: ViewGroup): RootRouter {
+  fun build(parentViewGroup: ViewGroup): LoggedOutRouter {
     val view = createView(parentViewGroup)
-    val interactor = RootInteractor()
-    val component = DaggerRootBuilder_Component.builder()
+    val interactor = LoggedOutInteractor()
+    val component = DaggerLoggedOutBuilder_Component.builder()
         .parentComponent(dependency)
         .view(view)
         .interactor(interactor)
         .build()
-    return component.rootribRouter()
+    return component.loggedoutRouter()
   }
 
-  override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): RootView {
+  override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): LoggedOutView {
     // TODO: Inflate a new view using the provided inflater, or create a new view programatically using the
-    return inflater.inflate(R.layout.root_rib, parentViewGroup, false) as RootView
+    // provided context from the parentViewGroup.
+    return inflater.inflate(R.layout.logged_out_rib, parentViewGroup, false) as LoggedOutView
   }
 
   interface ParentComponent {
@@ -50,40 +50,38 @@ class RootBuilder(dependency: ParentComponent) : ViewBuilder<RootView, RootRoute
   @dagger.Module
   abstract class Module {
 
-    @RootRibScope
+    @LoggedOutScope
     @Binds
-    internal abstract fun presenter(view: RootView): RootInteractor.RootRibPresenter
+    internal abstract fun presenter(view: LoggedOutView): LoggedOutInteractor.LoggedOutPresenter
 
     @dagger.Module
     companion object {
 
-      @RootRibScope
+      @LoggedOutScope
       @Provides
       @JvmStatic
       internal fun router(
-        component: Component,
-        view: RootView,
-        interactor: RootInteractor): RootRouter {
-        return RootRouter(view, interactor, component, LoggedOutBuilder(component))
+          component: Component,
+          view: LoggedOutView,
+          interactor: LoggedOutInteractor): LoggedOutRouter {
+        return LoggedOutRouter(view, interactor, component)
       }
     }
 
     // TODO: Create provider methods for dependencies created by this Rib. These should be static.
   }
 
-  @RootRibScope
+  @LoggedOutScope
   @dagger.Component(modules = arrayOf(Module::class), dependencies = arrayOf(ParentComponent::class))
-  interface Component : InteractorBaseComponent<RootInteractor>,
-    LoggedOutBuilder.ParentComponent,
-    BuilderComponent {
+  interface Component : InteractorBaseComponent<LoggedOutInteractor>, BuilderComponent {
 
     @dagger.Component.Builder
     interface Builder {
       @BindsInstance
-      fun interactor(interactor: RootInteractor): Builder
+      fun interactor(interactor: LoggedOutInteractor): Builder
 
       @BindsInstance
-      fun view(view: RootView): Builder
+      fun view(view: LoggedOutView): Builder
 
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component
@@ -91,14 +89,14 @@ class RootBuilder(dependency: ParentComponent) : ViewBuilder<RootView, RootRoute
   }
 
   interface BuilderComponent {
-    fun rootribRouter(): RootRouter
+    fun loggedoutRouter(): LoggedOutRouter
   }
 
   @Scope
   @Retention(CLASS)
-  internal annotation class RootRibScope
+  internal annotation class LoggedOutScope
 
   @Qualifier
   @Retention(CLASS)
-  internal annotation class RootRibInternal
+  internal annotation class LoggedOutInternal
 }
