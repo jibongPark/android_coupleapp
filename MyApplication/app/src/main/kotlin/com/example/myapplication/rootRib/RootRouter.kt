@@ -22,10 +22,21 @@ class RootRouter(
 
     private final var loggedOutBuilder = loggedOutBuilder
 
+    private var loggedoutRouter: LoggedOutRouter? = null
+
+
     fun attachLoggedOut() {
-        var router = loggedOutBuilder.build(view) as ViewRouter<*, *>
-        attachChild(router)
-        view.addView(router.view)
+        loggedoutRouter = loggedOutBuilder.build(view)
+        attachChild(loggedoutRouter!!)
+        view.addView(loggedoutRouter!!.view)
+    }
+
+    fun detachLoggedOut() {
+        if(loggedoutRouter != null) {
+            detachChild(loggedoutRouter!!)
+            view.removeView(loggedoutRouter!!.view)
+        }
+        loggedoutRouter = null;
     }
 }
 

@@ -42,4 +42,8 @@ class LoggedOutInteractor : Interactor<LoggedOutInteractor.LoggedOutPresenter, L
   interface LoggedOutPresenter {
     fun loginName(): Observable<Any>?
   }
+
+  interface Listner {
+    fun login(userName: String)
+  }
 }

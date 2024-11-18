@@ -1,11 +1,15 @@
 package com.example.myapplication.logged_out
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import com.example.myapplication.R
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable
@@ -18,6 +22,17 @@ class LoggedOutView @JvmOverloads constructor(context: Context, attrs: Attribute
     private var loginButton: Button? = null
     private val playerOneEditText: EditText? = null
     private var playerTwoEditText: EditText? = null
+
+    init {
+        setBackgroundColor(Color.RED)
+
+        addView(
+            TextView(context).apply {
+                text = "root (view)"
+                setTextColor(Color.WHITE)
+            },
+        )
+    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()

@@ -1,8 +1,7 @@
-package com.example.myapplication.logged_out
+package com.example.myapplication.diary
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.myapplication.R
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -14,33 +13,33 @@ import javax.inject.Qualifier
 import javax.inject.Scope
 
 /**
- * Builder for the {@link LoggedOutScope}.
+ * Builder for the {@link DiaryScope}.
  *
  * TODO describe this scope's responsibility as a whole.
  */
-open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOutView, LoggedOutRouter, LoggedOutBuilder.ParentComponent>(dependency) {
+class DiaryBuilder(dependency: ParentComponent) : ViewBuilder<DiaryView, DiaryRouter, DiaryBuilder.ParentComponent>(dependency) {
 
   /**
-   * Builds a new [LoggedOutRouter].
+   * Builds a new [DiaryRouter].
    *
    * @param parentViewGroup parent view group that this router's view will be added to.
-   * @return a new [LoggedOutRouter].
+   * @return a new [DiaryRouter].
    */
-  fun build(parentViewGroup: ViewGroup): LoggedOutRouter {
+  fun build(parentViewGroup: ViewGroup): DiaryRouter {
     val view = createView(parentViewGroup)
-    val interactor = LoggedOutInteractor()
-    val component = DaggerLoggedOutBuilder_Component.builder()
+    val interactor = DiaryInteractor()
+    val component = DaggerDiaryBuilder_Component.builder()
         .parentComponent(dependency)
         .view(view)
         .interactor(interactor)
         .build()
-    return component.loggedoutRouter()
+    return component.diaryRouter()
   }
 
-  override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): LoggedOutView {
+  override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): DiaryView {
     // TODO: Inflate a new view using the provided inflater, or create a new view programatically using the
     // provided context from the parentViewGroup.
-    return inflater.inflate(R.layout.logged_out_rib, parentViewGroup, false) as LoggedOutView
+    return DiaryView(parentViewGroup.context)
   }
 
   interface ParentComponent {
@@ -50,38 +49,38 @@ open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOut
   @dagger.Module
   abstract class Module {
 
-    @LoggedOutScope
+    @DiaryScope
     @Binds
-    internal abstract fun presenter(view: LoggedOutView): LoggedOutInteractor.LoggedOutPresenter
+    internal abstract fun presenter(view: DiaryView): DiaryInteractor.DiaryPresenter
 
     @dagger.Module
     companion object {
 
-      @LoggedOutScope
+      @DiaryScope
       @Provides
       @JvmStatic
       internal fun router(
           component: Component,
-          view: LoggedOutView,
-          interactor: LoggedOutInteractor): LoggedOutRouter {
-        return LoggedOutRouter(view, interactor, component)
+          view: DiaryView,
+          interactor: DiaryInteractor): DiaryRouter {
+        return DiaryRouter(view, interactor, component)
       }
     }
 
     // TODO: Create provider methods for dependencies created by this Rib. These should be static.
   }
 
-  @LoggedOutScope
+  @DiaryScope
   @dagger.Component(modules = arrayOf(Module::class), dependencies = arrayOf(ParentComponent::class))
-  interface Component : InteractorBaseComponent<LoggedOutInteractor>, BuilderComponent {
+  interface Component : InteractorBaseComponent<DiaryInteractor>, BuilderComponent {
 
     @dagger.Component.Builder
     interface Builder {
       @BindsInstance
-      fun interactor(interactor: LoggedOutInteractor): Builder
+      fun interactor(interactor: DiaryInteractor): Builder
 
       @BindsInstance
-      fun view(view: LoggedOutView): Builder
+      fun view(view: DiaryView): Builder
 
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component
@@ -89,14 +88,14 @@ open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOut
   }
 
   interface BuilderComponent {
-    fun loggedoutRouter(): LoggedOutRouter
+    fun diaryRouter(): DiaryRouter
   }
 
   @Scope
   @Retention(CLASS)
-  internal annotation class LoggedOutScope
+  internal annotation class DiaryScope
 
   @Qualifier
   @Retention(CLASS)
-  internal annotation class LoggedOutInternal
+  internal annotation class DiaryInternal
 }
