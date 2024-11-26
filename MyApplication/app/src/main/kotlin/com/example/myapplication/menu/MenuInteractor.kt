@@ -1,4 +1,4 @@
-package com.example.myapplication.rootRib
+package com.example.myapplication.menu
 
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
@@ -6,21 +6,18 @@ import com.uber.rib.core.RibInteractor
 import javax.inject.Inject
 
 /**
- * Coordinates Business Logic for [RootRibScope].
+ * Coordinates Business Logic for [MenuScope].
  *
  * TODO describe the logic of this scope.
  */
 @RibInteractor
-class RootInteractor : Interactor<RootInteractor.RootRibPresenter, RootRouter>() {
+class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
 
   @Inject
-  lateinit var presenter: RootRibPresenter
+  lateinit var presenter: MenuPresenter
 
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
-
-    router.attachLoggedOut();
-    router.attachMenu()
 
     // TODO: Add attachment logic here (RxSubscriptions, etc.).
   }
@@ -34,5 +31,5 @@ class RootInteractor : Interactor<RootInteractor.RootRibPresenter, RootRouter>()
   /**
    * Presenter interface implemented by this RIB's view.
    */
-  interface RootRibPresenter
+  interface MenuPresenter
 }

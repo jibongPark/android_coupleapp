@@ -1,9 +1,13 @@
 package com.example.myapplication.rootRib
 
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.ViewGroup
 import com.example.myapplication.R
+import com.example.myapplication.databinding.RootRibBinding
 import com.example.myapplication.logged_out.LoggedOutBuilder
+import com.example.myapplication.logged_out.LoggedOutView
+import com.example.myapplication.menu.MenuBuilder
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -39,8 +43,8 @@ class RootBuilder(dependency: ParentComponent) : ViewBuilder<RootView, RootRoute
   }
 
   override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): RootView {
-    // TODO: Inflate a new view using the provided inflater, or create a new view programatically using the
-    return inflater.inflate(R.layout.root_rib, parentViewGroup, false) as RootView
+
+    return RootRibBinding.inflate(inflater, parentViewGroup, false).root as RootView
   }
 
   interface ParentComponent {
@@ -64,7 +68,7 @@ class RootBuilder(dependency: ParentComponent) : ViewBuilder<RootView, RootRoute
         component: Component,
         view: RootView,
         interactor: RootInteractor): RootRouter {
-        return RootRouter(view, interactor, component, LoggedOutBuilder(component))
+        return RootRouter(view, interactor, component, LoggedOutBuilder(component), MenuBuilder(component))
       }
     }
 
@@ -75,6 +79,7 @@ class RootBuilder(dependency: ParentComponent) : ViewBuilder<RootView, RootRoute
   @dagger.Component(modules = arrayOf(Module::class), dependencies = arrayOf(ParentComponent::class))
   interface Component : InteractorBaseComponent<RootInteractor>,
     LoggedOutBuilder.ParentComponent,
+    MenuBuilder.ParentComponent,
     BuilderComponent {
 
     @dagger.Component.Builder

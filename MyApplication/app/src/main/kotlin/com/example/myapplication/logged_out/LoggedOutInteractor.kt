@@ -25,6 +25,7 @@ class LoggedOutInteractor : Interactor<LoggedOutInteractor.LoggedOutPresenter, L
   @SuppressLint("CheckResult")
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
+
     presenter
       .loginName()
         ?.subscribe(Consumer<Any> { name -> Log.d("MOO", name.toString()) })

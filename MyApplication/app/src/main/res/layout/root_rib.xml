@@ -1,5 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.example.myapplication.rootRib.RootView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+                name="rootView"
+                type="com.example.myapplication.rootRib.RootView" />
+    </data>
+    <com.example.myapplication.rootRib.RootView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <FrameLayout
+                android:id="@+id/mainView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+        android:layout_weight="0.8"/>
+
+        <FrameLayout
+                android:id="@+id/menuView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="0.2"/>
+    </com.example.myapplication.rootRib.RootView>
+</layout>
