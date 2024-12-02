@@ -1,4 +1,4 @@
-package com.example.myapplication.logged_out
+package com.example.myapplication.calendar
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,18 +17,18 @@ import javax.inject.Scope
  *
  * TODO describe this scope's responsibility as a whole.
  */
-open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOutView, LoggedOutRouter, LoggedOutBuilder.ParentComponent>(dependency) {
+open class CalendarBuilder(dependency: ParentComponent) : ViewBuilder<CalendarView, CalendarRouter, CalendarBuilder.ParentComponent>(dependency) {
 
   /**
-   * Builds a new [LoggedOutRouter].
+   * Builds a new [CalendarRouter].
    *
    * @param parentViewGroup parent view group that this router's view will be added to.
-   * @return a new [LoggedOutRouter].
+   * @return a new [CalendarRouter].
    */
-  fun build(parentViewGroup: ViewGroup): LoggedOutRouter {
+  fun build(parentViewGroup: ViewGroup): CalendarRouter {
     val view = createView(parentViewGroup)
-    val interactor = LoggedOutInteractor()
-    val component = DaggerLoggedOutBuilder_Component.builder()
+    val interactor = CalendarInteractor()
+    val component = DaggerCalendarBuilder_Component.builder()
         .parentComponent(dependency)
         .view(view)
         .interactor(interactor)
@@ -36,10 +36,10 @@ open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOut
     return component.loggedoutRouter()
   }
 
-  override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): LoggedOutView {
+  override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): CalendarView {
     // TODO: Inflate a new view using the provided inflater, or create a new view programatically using the
     // provided context from the parentViewGroup.
-    return LoggedOutView(parentViewGroup.context)
+    return CalendarView(parentViewGroup.context)
 //    return inflater.inflate(R.layout.logged_out_rib, parentViewGroup, false) as LoggedOutView
   }
 
@@ -52,7 +52,7 @@ open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOut
 
     @LoggedOutScope
     @Binds
-    internal abstract fun presenter(view: LoggedOutView): LoggedOutInteractor.LoggedOutPresenter
+    internal abstract fun presenter(view: CalendarView): CalendarInteractor.CalendarPresenter
 
     @dagger.Module
     companion object {
@@ -61,10 +61,10 @@ open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOut
       @Provides
       @JvmStatic
       internal fun router(
-          component: Component,
-          view: LoggedOutView,
-          interactor: LoggedOutInteractor): LoggedOutRouter {
-        return LoggedOutRouter(view, interactor, component)
+        component: Component,
+        view: CalendarView,
+        interactor: CalendarInteractor): CalendarRouter {
+        return CalendarRouter(view, interactor, component)
       }
     }
 
@@ -73,15 +73,15 @@ open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOut
 
   @LoggedOutScope
   @dagger.Component(modules = arrayOf(Module::class), dependencies = arrayOf(ParentComponent::class))
-  interface Component : InteractorBaseComponent<LoggedOutInteractor>, BuilderComponent {
+  interface Component : InteractorBaseComponent<CalendarInteractor>, BuilderComponent {
 
     @dagger.Component.Builder
     interface Builder {
       @BindsInstance
-      fun interactor(interactor: LoggedOutInteractor): Builder
+      fun interactor(interactor: CalendarInteractor): Builder
 
       @BindsInstance
-      fun view(view: LoggedOutView): Builder
+      fun view(view: CalendarView): Builder
 
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component
@@ -89,7 +89,7 @@ open class LoggedOutBuilder(dependency: ParentComponent) : ViewBuilder<LoggedOut
   }
 
   interface BuilderComponent {
-    fun loggedoutRouter(): LoggedOutRouter
+    fun loggedoutRouter(): CalendarRouter
   }
 
   @Scope

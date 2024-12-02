@@ -17,11 +17,11 @@ import com.example.myapplication.R
 class RootView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : LinearLayout(context, attrs, defStyle), RootInteractor.RootRibPresenter {
 
     fun addViewToMain(view: View) {
-        findViewById<FrameLayout>(R.id.mainView)?.addView(view)
+        findViewById<LinearLayout>(R.id.mainView)?.addView(view)
     }
 
     fun removeViewToMain(view:View) {
-        findViewById<FrameLayout>(R.id.mainView)?.removeView(view)
+        findViewById<LinearLayout>(R.id.mainView)?.removeView(view)
     }
 
     fun addViewToMenu(view: View) {

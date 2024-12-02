@@ -1,4 +1,4 @@
-package com.example.myapplication.logged_out
+package com.example.myapplication.calendar
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -17,10 +17,10 @@ import javax.inject.Inject
  * TODO describe the logic of this scope.
  */
 @RibInteractor
-class LoggedOutInteractor : Interactor<LoggedOutInteractor.LoggedOutPresenter, LoggedOutRouter>() {
+class CalendarInteractor : Interactor<CalendarInteractor.CalendarPresenter, CalendarRouter>() {
 
   @Inject
-  lateinit var presenter: LoggedOutPresenter
+  lateinit var presenter: CalendarPresenter
 
   @SuppressLint("CheckResult")
   override fun didBecomeActive(savedInstanceState: Bundle?) {
@@ -40,7 +40,7 @@ class LoggedOutInteractor : Interactor<LoggedOutInteractor.LoggedOutPresenter, L
   /**
    * Presenter interface implemented by this RIB's view.
    */
-  interface LoggedOutPresenter {
+  interface CalendarPresenter {
     fun loginName(): Observable<Any>?
   }
 
