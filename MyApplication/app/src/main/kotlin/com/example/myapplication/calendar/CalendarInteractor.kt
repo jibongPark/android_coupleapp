@@ -27,8 +27,8 @@ class CalendarInteractor : Interactor<CalendarInteractor.CalendarPresenter, Cale
     super.didBecomeActive(savedInstanceState)
 
     presenter
-      .loginName()
-        ?.subscribe(Consumer<Any> { name -> Log.d("MOO", name.toString()) })
+      .dayClick()
+        ?.subscribe { selectedDate -> Log.d("MOO", selectedDate.toString()) }
   }
 
   override fun willResignActive() {
@@ -41,7 +41,7 @@ class CalendarInteractor : Interactor<CalendarInteractor.CalendarPresenter, Cale
    * Presenter interface implemented by this RIB's view.
    */
   interface CalendarPresenter {
-    fun loginName(): Observable<Any>?
+    fun dayClick(): Observable<Any>?
   }
 
   interface Listner {

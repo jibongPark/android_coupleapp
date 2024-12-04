@@ -13,11 +13,15 @@ import java.time.Year
 import java.time.YearMonth
 import java.time.temporal.TemporalAdjusters
 
+enum class CalendarSize {
+    FULL, HALF, MIN
+}
+
 data class CalendarState @OptIn(ExperimentalFoundationApi::class) constructor(
     var currentYM: MutableState<YearMonth> = mutableStateOf(YearMonth.now()),
     var currentDate: MutableState<LocalDate> = mutableStateOf(LocalDate.now())
 ) {
-
+    var viewState by mutableStateOf(CalendarSize.FULL)
     var selectedDate: LocalDate = LocalDate.now()
 
     fun getDayOfMonth(yearMonth: YearMonth): List<LocalDate> {
@@ -32,14 +36,18 @@ data class CalendarState @OptIn(ExperimentalFoundationApi::class) constructor(
         val Saver: Saver<CalendarState, Any> = listSaver(
             save = {
                 listOf(
-                    it.currentYM.value.toString(), it.currentDate.value.toString()
+                    it.currentYM.value.toString(),
+                    it.currentDate.value.toString(),
+                    it.viewState
                 )
             },
             restore = { savedValue ->
                 CalendarState(
-                    currentYM = mutableStateOf(YearMonth.parse(savedValue[0])),
-                    currentDate = mutableStateOf(LocalDate.parse(savedValue[1]))
-                )
+                    currentYM = mutableStateOf(YearMonth.parse(savedValue[0].toString())),
+                    currentDate = mutableStateOf(LocalDate.parse(savedValue[1].toString()))
+                ).apply {
+                    viewState = savedValue[2] as CalendarSize
+                }
             }
         )
     }

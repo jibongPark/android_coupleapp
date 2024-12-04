@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.myapplication.databinding.RootRibBinding
 import com.example.myapplication.calendar.CalendarBuilder
+import com.example.myapplication.calendar.schedule.ScheduleBuilder
 import com.example.myapplication.menu.MenuBuilder
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
@@ -66,7 +67,7 @@ class RootBuilder(dependency: ParentComponent) : ViewBuilder<RootView, RootRoute
         view: RootView,
         interactor: RootInteractor): RootRouter {
         return RootRouter(view, interactor, component,
-          CalendarBuilder(component), MenuBuilder(component))
+          CalendarBuilder(component), ScheduleBuilder(component), MenuBuilder(component))
       }
     }
 
@@ -78,6 +79,7 @@ class RootBuilder(dependency: ParentComponent) : ViewBuilder<RootView, RootRoute
   interface Component : InteractorBaseComponent<RootInteractor>,
     CalendarBuilder.ParentComponent,
     MenuBuilder.ParentComponent,
+    ScheduleBuilder.ParentComponent,
     BuilderComponent {
 
     @dagger.Component.Builder

@@ -52,6 +52,12 @@ android {
     dataBinding {
         enable = true
     }
+
+    sourceSets {
+        getByName("main").java.srcDir("src/main/kotlin")
+        getByName("test").java.srcDir("src/test/kotlin")
+        getByName("androidTest").java.srcDir("src/androidTest/kotlin")
+    }
 }
 
 dependencies {
@@ -65,10 +71,15 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
+    testImplementation("com.uber.rib:rib-test:0.16.3")
+    testImplementation("org.mockito:mockito-core:4.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.junit.jupiter)
+    androidTestImplementation(libs.junit.jupiter)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 

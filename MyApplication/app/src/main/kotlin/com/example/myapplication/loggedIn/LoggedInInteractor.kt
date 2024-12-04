@@ -1,4 +1,4 @@
-package com.example.myapplication.rootRib
+package com.example.myapplication.loggedIn
 
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
@@ -6,22 +6,18 @@ import com.uber.rib.core.RibInteractor
 import javax.inject.Inject
 
 /**
- * Coordinates Business Logic for [RootRibScope].
+ * Coordinates Business Logic for [LoggedInScope].
  *
  * TODO describe the logic of this scope.
  */
 @RibInteractor
-class RootInteractor : Interactor<RootInteractor.RootRibPresenter, RootRouter>() {
+class LoggedInInteractor : Interactor<LoggedInInteractor.LoggedInPresenter, LoggedInRouter>() {
 
   @Inject
-  lateinit var presenter: RootRibPresenter
+  lateinit var presenter: LoggedInPresenter
 
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
-
-    router.attachCalendar();
-    router.attachSchedule()
-    router.attachMenu()
 
     // TODO: Add attachment logic here (RxSubscriptions, etc.).
   }
@@ -35,5 +31,5 @@ class RootInteractor : Interactor<RootInteractor.RootRibPresenter, RootRouter>()
   /**
    * Presenter interface implemented by this RIB's view.
    */
-  interface RootRibPresenter
+  interface LoggedInPresenter
 }

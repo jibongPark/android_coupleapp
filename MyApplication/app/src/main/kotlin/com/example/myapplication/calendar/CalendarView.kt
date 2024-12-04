@@ -3,6 +3,8 @@ package com.example.myapplication.calendar
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,8 +46,8 @@ class CalendarView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ): LinearLayout(context, attr, defStyleAttr), CalendarInteractor.CalendarPresenter {
 
-    private val buttonClickSubject: PublishSubject<Unit> = PublishSubject.create()
-    private var text = ""
+    private val dateSelectSubject: PublishSubject<Unit> = PublishSubject.create()
+    private var selectedDate : LocalDate = LocalDate.now()
 
     private val composeView = ComposeView(context).apply {
         setContent {
@@ -65,7 +67,20 @@ class CalendarView @JvmOverloads constructor(
     @Composable
     fun drawView(state: CalendarState) {
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        val heightModifier: Modifier = when (state.viewState) {
+            CalendarSize.FULL -> Modifier
+                .animateContentSize()
+                .fillMaxSize()
+            CalendarSize.HALF -> Modifier
+                .animateContentSize()
+                .height(600.dp)
+            CalendarSize.MIN -> Modifier
+                .animateContentSize()
+                .height(300.dp)
+        }
+
+        Column(modifier = heightModifier
+            .fillMaxWidth()) {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -78,16 +93,17 @@ class CalendarView @JvmOverloads constructor(
                         .fillMaxHeight(),
                     state = state,
                     onClick = {
-
+                        selectedDate = state.selectedDate
+                        dateSelectSubject.onNext(Unit)
                     }
                 )
             }
         }
     }
 
-    override fun loginName(): Observable<Any>? {
-        return buttonClickSubject.map(){
-            text
+    override fun dayClick(): Observable<Any>? {
+        return dateSelectSubject.map(){
+            selectedDate
         }
     }
 
