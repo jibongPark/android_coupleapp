@@ -2,9 +2,9 @@
     <data>
         <variable
                 name="rootView"
-                type="com.example.myapplication.rootRib.RootView" />
+                type="com.bongbong.coupleapp.rootRib.RootView" />
     </data>
-    <com.example.myapplication.rootRib.RootView
+    <com.bongbong.coupleapp.rootRib.RootView
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -20,5 +20,5 @@
                 android:id="@+id/menuView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-    </com.example.myapplication.rootRib.RootView>
+    </com.bongbong.coupleapp.rootRib.RootView>
 </layout>
