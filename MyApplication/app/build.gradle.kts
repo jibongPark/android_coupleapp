@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.bongbong.coupleapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.bongbong.coupleapp"
         minSdk = 26
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
