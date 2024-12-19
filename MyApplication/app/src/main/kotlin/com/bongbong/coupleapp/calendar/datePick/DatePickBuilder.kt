@@ -2,6 +2,7 @@ package com.bongbong.coupleapp.calendar.datePick
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bongbong.coupleapp.calendar.datePick.DaggerDatePickBuilder_Component
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -60,9 +61,10 @@ class DatePickBuilder(dependency: ParentComponent) : ViewBuilder<DatePickView, D
       @Provides
       @JvmStatic
       internal fun router(
-          component: Component,
-          view: DatePickView,
-          interactor: DatePickInteractor): DatePickRouter {
+        component: Component,
+        view: DatePickView,
+        interactor: DatePickInteractor
+      ): DatePickRouter {
         return DatePickRouter(view, interactor, component)
       }
     }

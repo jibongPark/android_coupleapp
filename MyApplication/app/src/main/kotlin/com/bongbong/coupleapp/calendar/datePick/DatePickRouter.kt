@@ -10,4 +10,5 @@ import com.uber.rib.core.ViewRouter
 class DatePickRouter(
     view: DatePickView,
     interactor: DatePickInteractor,
-    component: DatePickBuilder.Component) : ViewRouter<DatePickView, DatePickInteractor>(view, interactor, component)
+    component: DatePickBuilder.Component
+) : ViewRouter<DatePickView, DatePickInteractor>(view, interactor, component)

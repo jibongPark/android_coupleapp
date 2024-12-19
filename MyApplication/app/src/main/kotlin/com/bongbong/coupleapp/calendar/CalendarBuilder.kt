@@ -2,6 +2,12 @@ package com.bongbong.coupleapp.calendar
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bongbong.coupleapp.calendar.addSchedule.AddScheduleBuilder
+import com.bongbong.coupleapp.calendar.addSchedule.AddScheduleInteractor
+import com.bongbong.coupleapp.calendar.schedule.ScheduleBuilder
+import com.bongbong.coupleapp.calendar.schedule.ScheduleInteractor
+import com.bongbong.coupleapp.loggedIn.LoggedInBuilder.LoggedInInternal
+import com.bongbong.coupleapp.loggedIn.LoggedInBuilder.LoggedInScope
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -50,30 +56,59 @@ open class CalendarBuilder(dependency: ParentComponent) : ViewBuilder<CalendarVi
   @dagger.Module
   abstract class Module {
 
-    @LoggedOutScope
+    @CalendarScope
     @Binds
     internal abstract fun presenter(view: CalendarView): CalendarInteractor.CalendarPresenter
 
     @dagger.Module
     companion object {
 
-      @LoggedOutScope
+      @CalendarScope
       @Provides
       @JvmStatic
       internal fun router(
         component: Component,
         view: CalendarView,
-        interactor: CalendarInteractor): CalendarRouter {
-        return CalendarRouter(view, interactor, component)
+        interactor: CalendarInteractor
+      ): CalendarRouter {
+        return CalendarRouter(view, interactor, ScheduleBuilder(component), AddScheduleBuilder(component), component)
+      }
+
+      @CalendarScope
+      @CalendarInternal
+      @Provides
+      @JvmStatic
+      fun mutableDataStream(): MutableDateStream {
+        return MutableDateStream()
+      }
+
+      @CalendarScope
+      @Provides
+      fun scheduleListener(calendarInteractor: CalendarInteractor): ScheduleInteractor.Listener {
+        return calendarInteractor.ScheduleListener()
+      }
+
+      @CalendarScope
+      @Provides
+      fun addScheduleListener(calendarInteractor: CalendarInteractor): AddScheduleInteractor.Listener {
+        return calendarInteractor.AddScheduleListner()
       }
     }
+
+    @CalendarScope
+    @Binds
+    abstract fun dateStream(@CalendarInternal mutableDateStream: MutableDateStream): DateStream
+
 
     // TODO: Create provider methods for dependencies created by this Rib. These should be static.
   }
 
-  @LoggedOutScope
+  @CalendarScope
   @dagger.Component(modules = arrayOf(Module::class), dependencies = arrayOf(ParentComponent::class))
-  interface Component : InteractorBaseComponent<CalendarInteractor>, BuilderComponent {
+  interface Component : InteractorBaseComponent<CalendarInteractor>,
+    ScheduleBuilder.ParentComponent,
+    AddScheduleBuilder.ParentComponent,
+    BuilderComponent {
 
     @dagger.Component.Builder
     interface Builder {
@@ -94,9 +129,9 @@ open class CalendarBuilder(dependency: ParentComponent) : ViewBuilder<CalendarVi
 
   @Scope
   @Retention(CLASS)
-  internal annotation class LoggedOutScope
+  internal annotation class CalendarScope
 
   @Qualifier
   @Retention(CLASS)
-  internal annotation class LoggedOutInternal
+  internal annotation class CalendarInternal
 }

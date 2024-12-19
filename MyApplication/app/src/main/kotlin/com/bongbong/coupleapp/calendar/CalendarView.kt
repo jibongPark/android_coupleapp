@@ -50,15 +50,14 @@ class CalendarView @JvmOverloads constructor(
     private val composeView = ComposeView(context).apply {
         setContent {
             MaterialTheme {
-//                rememberSaveable(saver = CalendarState.Saver) {CalendarState() }
-                var state = rememberCalendarState()
-
+                val state = rememberCalendarState()
                 drawView(state)
             }
         }
     }
 
     init {
+        orientation = VERTICAL
         addView(composeView)
     }
 

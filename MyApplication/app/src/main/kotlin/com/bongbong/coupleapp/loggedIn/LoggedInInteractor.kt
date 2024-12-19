@@ -1,8 +1,9 @@
 package com.bongbong.coupleapp.loggedIn
 
-import com.uber.rib.core.Bundle
-import com.uber.rib.core.Interactor
-import com.uber.rib.core.RibInteractor
+import com.bongbong.coupleapp.calendar.MutableDateStream
+import com.bongbong.coupleapp.calendar.schedule.ScheduleInteractor
+import com.uber.rib.core.*
+import java.time.LocalDate
 import javax.inject.Inject
 
 /**
@@ -11,16 +12,15 @@ import javax.inject.Inject
  * TODO describe the logic of this scope.
  */
 @RibInteractor
-class LoggedInInteractor : Interactor<LoggedInInteractor.LoggedInPresenter, LoggedInRouter>() {
+class LoggedInInteractor(
+  presenter: ComposePresenter
+) : BasicInteractor<LoggedInInteractor.LoggedInPresenter, LoggedInRouter>(presenter) {
 
-  @Inject
-  lateinit var presenter: LoggedInPresenter
 
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
 
     router.attachCalendar()
-    router.attachSchedule()
   }
 
   override fun willResignActive() {

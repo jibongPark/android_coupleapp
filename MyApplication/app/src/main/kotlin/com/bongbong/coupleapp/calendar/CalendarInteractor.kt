@@ -2,10 +2,13 @@ package com.bongbong.coupleapp.calendar
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.bongbong.coupleapp.calendar.addSchedule.AddScheduleInteractor
+import com.bongbong.coupleapp.calendar.schedule.ScheduleInteractor
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
 import io.reactivex.Observable
+import java.time.LocalDate
 
 import javax.inject.Inject
 
@@ -21,6 +24,10 @@ class CalendarInteractor : Interactor<CalendarInteractor.CalendarPresenter, Cale
   @Inject
   lateinit var presenter: CalendarPresenter
 
+  @Inject
+  @CalendarBuilder.CalendarInternal
+  lateinit var dateStream: MutableDateStream
+
   @SuppressLint("CheckResult")
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
@@ -28,8 +35,22 @@ class CalendarInteractor : Interactor<CalendarInteractor.CalendarPresenter, Cale
     presenter
       .dayClick()
         ?.subscribe { selectedDate ->
-          Log.d("MOO", selectedDate.toString())
+          dateStream.selectDate(selectedDate as LocalDate)
         }
+
+    router.attachSchedule()
+  }
+
+  inner class ScheduleListener : ScheduleInteractor.Listener {
+    override fun showAddSchedule(date: LocalDate) {
+      router.attachAddSchedule()
+    }
+  }
+
+  inner class AddScheduleListner: AddScheduleInteractor.Listener {
+    override fun removeAddSchedule() {
+      router.detachAddSchedule()
+    }
   }
 
   override fun willResignActive() {
@@ -43,9 +64,5 @@ class CalendarInteractor : Interactor<CalendarInteractor.CalendarPresenter, Cale
    */
   interface CalendarPresenter {
     fun dayClick(): Observable<Any>?
-  }
-
-  interface Listner {
-    fun login(userName: String)
   }
 }

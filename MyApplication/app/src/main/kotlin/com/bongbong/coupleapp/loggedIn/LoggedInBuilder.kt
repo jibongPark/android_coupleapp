@@ -2,8 +2,8 @@ package com.bongbong.coupleapp.loggedIn
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import com.bongbong.coupleapp.calendar.CalendarBuilder
-import com.bongbong.coupleapp.calendar.schedule.ScheduleBuilder
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -62,21 +62,18 @@ class LoggedInBuilder(dependency: ParentComponent) : ViewBuilder<LoggedInView, L
       @Provides
       @JvmStatic
       internal fun router(
-          component: Component,
-          view: LoggedInView,
-          interactor: LoggedInInteractor): LoggedInRouter {
-        return LoggedInRouter(view, interactor, CalendarBuilder(component), ScheduleBuilder(component), component)
+        component: Component,
+        view: ComposeView,
+        interactor: LoggedInInteractor): LoggedInRouter {
+        return LoggedInRouter(view, interactor, CalendarBuilder(component), component)
       }
     }
-
-    // TODO: Create provider methods for dependencies created by this Rib. These should be static.
   }
 
   @LoggedInScope
   @dagger.Component(modules = arrayOf(Module::class), dependencies = arrayOf(ParentComponent::class))
   interface Component : InteractorBaseComponent<LoggedInInteractor>,
     CalendarBuilder.ParentComponent,
-    ScheduleBuilder.ParentComponent,
     BuilderComponent {
 
     @dagger.Component.Builder

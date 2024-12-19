@@ -10,4 +10,5 @@ import com.uber.rib.core.ViewRouter
 class ScheduleRouter(
     view: ScheduleView,
     interactor: ScheduleInteractor,
-    component: ScheduleBuilder.Component) : ViewRouter<ScheduleView, ScheduleInteractor>(view, interactor, component)
+    component: ScheduleBuilder.Component
+) : ViewRouter<ScheduleView, ScheduleInteractor>(view, interactor, component)

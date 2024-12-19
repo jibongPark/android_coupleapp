@@ -2,6 +2,7 @@ package com.bongbong.coupleapp.rootRib
 
 import com.bongbong.coupleapp.calendar.CalendarBuilder
 import com.bongbong.coupleapp.calendar.schedule.ScheduleBuilder
+import com.bongbong.coupleapp.loggedIn.LoggedInBuilder
 import com.bongbong.coupleapp.menu.MenuBuilder
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -26,6 +27,6 @@ class RootRouterTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
 
-        router = RootRouter(view, interactor, component, CalendarBuilder(component), ScheduleBuilder(component) ,MenuBuilder(component))
+        router = RootRouter(view, interactor, component, LoggedInBuilder(component) ,MenuBuilder(component))
     }
 }

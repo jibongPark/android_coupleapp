@@ -2,6 +2,8 @@ package com.bongbong.coupleapp.calendar.schedule
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bongbong.coupleapp.calendar.CalendarInteractor
+import com.bongbong.coupleapp.calendar.DateStream
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -41,7 +43,8 @@ class ScheduleBuilder(dependency: ParentComponent) : ViewBuilder<ScheduleView, S
   }
 
   interface ParentComponent {
-    // TODO: Define dependencies required from your parent interactor here.
+    fun scheduleListener(): ScheduleInteractor.Listener
+    fun dateStream(): DateStream
   }
 
   @dagger.Module
@@ -58,9 +61,10 @@ class ScheduleBuilder(dependency: ParentComponent) : ViewBuilder<ScheduleView, S
       @Provides
       @JvmStatic
       internal fun router(
-          component: Component,
-          view: ScheduleView,
-          interactor: ScheduleInteractor): ScheduleRouter {
+        component: Component,
+        view: ScheduleView,
+        interactor: ScheduleInteractor
+      ): ScheduleRouter {
         return ScheduleRouter(view, interactor, component)
       }
     }
@@ -70,7 +74,9 @@ class ScheduleBuilder(dependency: ParentComponent) : ViewBuilder<ScheduleView, S
 
   @ScheduleScope
   @dagger.Component(modules = arrayOf(Module::class), dependencies = arrayOf(ParentComponent::class))
-  interface Component : InteractorBaseComponent<ScheduleInteractor>, BuilderComponent {
+  interface Component : InteractorBaseComponent<ScheduleInteractor>,
+    ScheduleBuilder.ParentComponent,
+    BuilderComponent {
 
     @dagger.Component.Builder
     interface Builder {
