@@ -13,16 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bongbong.coupleapp.util
+package com.bongbong.coupleapp
 
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import android.app.Application
+import android.util.Log
+import android.widget.Toast
 
-class EventStream<T> {
-  private val _sharedFlow = MutableSharedFlow<T>(extraBufferCapacity = 1)
-  private val sharedFlow = _sharedFlow.asSharedFlow()
+class LoggerClientImpl(private val application: Application) : LoggerClient {
+  override fun log(message: String) {
+    Toast.makeText(application.applicationContext, message, Toast.LENGTH_SHORT).show()
+    Log.d(this::class.java.simpleName, message)
+  }
+}
 
-  fun notify(event: T) = _sharedFlow.tryEmit(event)
+object NoOpLoggerClient : LoggerClient {
+  override fun log(message: String) = Unit
+}
 
-  fun observe() = sharedFlow
+interface LoggerClient {
+  fun log(message: String)
 }

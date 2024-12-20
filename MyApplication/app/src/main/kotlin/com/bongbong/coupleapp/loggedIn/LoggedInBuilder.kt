@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import com.bongbong.coupleapp.calendar.CalendarBuilder
+import com.bongbong.coupleapp.loggedIn.DaggerLoggedInBuilder_Component
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -64,7 +65,8 @@ class LoggedInBuilder(dependency: ParentComponent) : ViewBuilder<LoggedInView, L
       internal fun router(
         component: Component,
         view: ComposeView,
-        interactor: LoggedInInteractor): LoggedInRouter {
+        interactor: LoggedInInteractor
+      ): LoggedInRouter {
         return LoggedInRouter(view, interactor, CalendarBuilder(component), component)
       }
     }

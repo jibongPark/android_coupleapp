@@ -13,16 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bongbong.coupleapp.util
+package com.bongbong.coupleapp.root.main.loggedin
 
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import com.uber.rib.core.BasicInteractor
+import com.uber.rib.core.Bundle
+import com.uber.rib.core.ComposePresenter
 
-class EventStream<T> {
-  private val _sharedFlow = MutableSharedFlow<T>(extraBufferCapacity = 1)
-  private val sharedFlow = _sharedFlow.asSharedFlow()
+class LoggedInInteractor(
+  presenter: ComposePresenter,
+  private val childContent: LoggedInRouter.ChildContent,
+) : BasicInteractor<ComposePresenter, LoggedInRouter>(presenter) {
 
-  fun notify(event: T) = _sharedFlow.tryEmit(event)
+  override fun didBecomeActive(savedInstanceState: Bundle?) {
+    super.didBecomeActive(savedInstanceState)
 
-  fun observe() = sharedFlow
+    router.view.setContent { LoggedInView(childContent = childContent) }
+  }
 }

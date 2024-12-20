@@ -13,16 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bongbong.coupleapp.util
+package com.bongbong.coupleapp.root
 
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import com.uber.rib.core.BasicInteractor
+import com.uber.rib.core.EmptyPresenter
 
-class EventStream<T> {
-  private val _sharedFlow = MutableSharedFlow<T>(extraBufferCapacity = 1)
-  private val sharedFlow = _sharedFlow.asSharedFlow()
-
-  fun notify(event: T) = _sharedFlow.tryEmit(event)
-
-  fun observe() = sharedFlow
-}
+class RootInteractor(presenter: EmptyPresenter) :
+  BasicInteractor<EmptyPresenter, RootRouter>(presenter)

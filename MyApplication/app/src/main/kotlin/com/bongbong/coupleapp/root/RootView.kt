@@ -13,16 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bongbong.coupleapp.util
+package com.bongbong.coupleapp.root
 
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import android.content.Context
+import android.graphics.Color
+import android.util.AttributeSet
+import android.widget.FrameLayout
+import android.widget.TextView
 
-class EventStream<T> {
-  private val _sharedFlow = MutableSharedFlow<T>(extraBufferCapacity = 1)
-  private val sharedFlow = _sharedFlow.asSharedFlow()
+class RootView
+@JvmOverloads
+constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyle: Int = 0,
+) : FrameLayout(context, attrs, defStyle) {
 
-  fun notify(event: T) = _sharedFlow.tryEmit(event)
-
-  fun observe() = sharedFlow
+  init {
+    setBackgroundColor(Color.RED)
+    addView(
+      TextView(context).apply {
+        text = "root (view)"
+        setTextColor(Color.WHITE)
+      },
+    )
+  }
 }

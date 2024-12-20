@@ -15,8 +15,8 @@ import androidx.compose.ui.layout.ModifierInfo
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import com.bongbong.coupleapp.calendar.CalendarBuilder
-import com.uber.rib.compose.util.EventStream
-import com.uber.rib.compose.util.StateStream
+import com.bongbong.coupleapp.util.EventStream
+import com.bongbong.coupleapp.util.StateStream
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.time.LocalDate

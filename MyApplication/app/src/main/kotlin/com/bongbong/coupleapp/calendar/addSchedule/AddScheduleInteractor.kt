@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.media.metrics.Event
 import android.util.Log
-import com.uber.rib.compose.util.EventStream
-import com.uber.rib.compose.util.StateStream
+import com.bongbong.coupleapp.util.EventStream
+import com.bongbong.coupleapp.util.StateStream
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor

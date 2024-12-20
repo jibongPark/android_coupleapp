@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations
 import org.junit.Before
 
 
-class RootRouterTest {
+class LoggedInCalendarScopeRouterTest {
 
     @Mock
     lateinit var component: RootBuilder.Component

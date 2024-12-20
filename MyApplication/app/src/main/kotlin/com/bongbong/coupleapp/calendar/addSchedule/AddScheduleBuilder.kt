@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import com.uber.rib.compose.util.EventStream
-import com.uber.rib.compose.util.StateStream
+import com.bongbong.coupleapp.util.EventStream
+import com.bongbong.coupleapp.util.StateStream
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
