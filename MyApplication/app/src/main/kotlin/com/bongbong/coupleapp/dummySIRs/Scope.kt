@@ -31,17 +31,11 @@ interface Scope {
     abstract fun interactor(): Interactor
 
     fun presenter(
-      childContent: Router.ChildContent,
     ): ComposePresenter {
       return object : ComposePresenter() {
-        override val composable = @Composable { View(childContent) }
+        override val composable = @Composable { View() }
       }
     }
 
-    fun view(parentViewGroup: ViewGroup): ComposeView {
-      return ComposeView(parentViewGroup.context)
-    }
-
-    abstract fun childContent(): Router.ChildContent
   }
 }

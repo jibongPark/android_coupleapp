@@ -31,18 +31,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoggedInView(childContent: LoggedInRouter.ChildContent) {
-  Column(
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Top,
-    modifier =
-      Modifier.fillMaxSize().padding(all = 4.dp).padding(top = 14.dp).background(Color(0xFFFFA500)),
-  ) {
-    Box(
-      modifier = Modifier.fillMaxWidth().weight(1.0f).padding(4.dp).background(Color.Yellow),
-    ) {
-      childContent.fullScreenSlot.value.invoke()
-    }
-  }
 }
 
 @Preview

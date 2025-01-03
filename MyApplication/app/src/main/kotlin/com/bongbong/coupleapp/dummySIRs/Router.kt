@@ -20,27 +20,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ComposeView
+import com.uber.rib.core.BasicComposeRouter
 import com.uber.rib.core.BasicViewRouter
+import com.uber.rib.core.ComposePresenter
 
 class Router(
-  view: ComposeView,
+  presenter: ComposePresenter,
   interactor: Interactor,
-  private val parentView: ViewGroup,
-  private val scope: Scope,
-  private val childContent: ChildContent,
-) : BasicViewRouter<ComposeView, Interactor>(view, interactor) {
+  slot: MutableState<(@Composable () -> Unit)>,
+) : BasicComposeRouter<Interactor>(presenter, interactor, slot) {
 
-  override fun willAttach() {
-    super.willAttach()
-    parentView.addView(view)
-  }
-
-  override fun willDetach() {
-    parentView.removeView(view)
-    super.willDetach()
-  }
-
-  class ChildContent {
-    internal var fullScreenSlot: MutableState<(@Composable () -> Unit)> = mutableStateOf({})
-  }
 }

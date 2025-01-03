@@ -21,12 +21,10 @@ import com.uber.rib.core.ComposePresenter
 
 class LoggedInInteractor(
   presenter: ComposePresenter,
-  private val childContent: LoggedInRouter.ChildContent,
 ) : BasicInteractor<ComposePresenter, LoggedInRouter>(presenter) {
 
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
 
-    router.view.setContent { LoggedInView(childContent = childContent) }
   }
 }

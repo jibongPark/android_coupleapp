@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import com.uber.rib.core.ComposePresenter
+import java.time.LocalDate
 
 @motif.Scope
 interface CalendarScope {
@@ -31,17 +32,18 @@ interface CalendarScope {
     abstract fun interactor(): CalendarInteractor
 
     fun presenter(
-      childContent: CalendarRouter.ChildContent,
     ): ComposePresenter {
       return object : ComposePresenter() {
-        override val composable = @Composable { CalendarView(childContent) }
+        override val composable = @Composable { CalendarView() }
       }
+    }
+
+    fun dateStream(date: LocalDate): DateStream{
+      return DateStream(date)
     }
 
     fun view(parentViewGroup: ViewGroup): ComposeView {
       return ComposeView(parentViewGroup.context)
     }
-
-    abstract fun childContent(): CalendarRouter.ChildContent
   }
 }

@@ -13,23 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bongbong.coupleapp.root
+package com.bongbong.coupleapp.root.main.loggedin.calendar.schedule
 
-import android.content.Context
-import android.graphics.Color
-import android.util.AttributeSet
-import android.widget.FrameLayout
-import android.widget.TextView
+import androidx.compose.runtime.Composable
+import com.uber.rib.core.ComposePresenter
 
-class RootView
-@JvmOverloads
-constructor(
-  context: Context,
-  attrs: AttributeSet? = null,
-  defStyle: Int = 0,
-) : FrameLayout(context, attrs, defStyle) {
+@motif.Scope
+interface ScheduleScope {
+  fun router(): ScheduleRouter
 
-  init {
-    setBackgroundColor(Color.TRANSPARENT)
+  @motif.Objects
+  abstract class Objects {
+    abstract fun router(): ScheduleRouter
+
+    abstract fun interactor(): ScheduleInteractor
+
+    fun presenter(
+    ): ComposePresenter {
+      return object : ComposePresenter() {
+        override val composable = @Composable { View() }
+      }
+    }
+
   }
 }

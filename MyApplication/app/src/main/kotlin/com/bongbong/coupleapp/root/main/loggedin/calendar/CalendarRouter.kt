@@ -15,32 +15,16 @@
  */
 package com.bongbong.coupleapp.root.main.loggedin.calendar
 
-import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.ComposeView
-import com.uber.rib.core.BasicViewRouter
+import com.uber.rib.core.BasicComposeRouter
+import com.uber.rib.core.ComposePresenter
+
 
 class CalendarRouter(
-  view: ComposeView,
-  calendarInteractor: CalendarInteractor,
-  private val parentView: ViewGroup,
-  private val calendarScope: CalendarScope,
-  private val childContent: ChildContent,
-) : BasicViewRouter<ComposeView, CalendarInteractor>(view, calendarInteractor) {
+  presenter: ComposePresenter,
+  interactor: CalendarInteractor,
+  slot: MutableState<(@Composable () -> Unit)>,
+) : BasicComposeRouter<CalendarInteractor>(presenter, interactor, slot) {
 
-  override fun willAttach() {
-    super.willAttach()
-    parentView.addView(view)
-  }
-
-  override fun willDetach() {
-    parentView.removeView(view)
-    super.willDetach()
-  }
-
-  class ChildContent {
-    internal var fullScreenSlot: MutableState<(@Composable () -> Unit)> = mutableStateOf({})
-  }
 }

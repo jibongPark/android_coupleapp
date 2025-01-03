@@ -21,12 +21,10 @@ import com.uber.rib.core.ComposePresenter
 
 class CalendarInteractor(
   presenter: ComposePresenter,
-  private val childContent: CalendarRouter.ChildContent,
 ) : BasicInteractor<ComposePresenter, CalendarRouter>(presenter) {
 
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
 
-    router.view.setContent { CalendarView(childContent = childContent) }
   }
 }

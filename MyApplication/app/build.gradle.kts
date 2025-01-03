@@ -83,7 +83,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    annotationProcessor("com.uber.rib:rib-compiler-test:0.16.3")
+    kapt("com.uber.rib:rib-compiler-test:0.16.3")
     implementation("com.uber.rib:rib-android:0.16.3")
     testImplementation("com.uber.rib:rib-test:0.16.3")
     implementation("com.uber.rib:rib-android-compose:0.16.3")

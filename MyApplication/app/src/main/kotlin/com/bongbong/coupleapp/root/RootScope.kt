@@ -26,7 +26,7 @@ import motif.Expose
 interface RootScope {
   fun router(): RootRouter
 
-  fun mainScope(parentViewGroup: ViewGroup): MainScope
+  fun mainScope(@Expose parentViewGroup: ViewGroup): MainScope
 
   @motif.Objects
   abstract class Objects {
@@ -40,19 +40,19 @@ interface RootScope {
       return RootView(parentViewGroup.context)
     }
 
-    @Expose
-    fun analyticsClient(activity: RibActivity): AnalyticsClient {
-      return AnalyticsClientImpl(activity.application)
-    }
-
-    @Expose
-    fun experimentClient(activity: RibActivity): ExperimentClient {
-      return ExperimentClientImpl(activity.application)
-    }
-
-    @Expose
-    fun loggerClient(activity: RibActivity): LoggerClient {
-      return LoggerClientImpl(activity.application)
-    }
+//    @Expose
+//    fun analyticsClient(activity: RibActivity): AnalyticsClient {
+//      return AnalyticsClientImpl(activity.application)
+//    }
+//
+//    @Expose
+//    fun experimentClient(activity: RibActivity): ExperimentClient {
+//      return ExperimentClientImpl(activity.application)
+//    }
+//
+//    @Expose
+//    fun loggerClient(activity: RibActivity): LoggerClient {
+//      return LoggerClientImpl(activity.application)
+//    }
   }
 }

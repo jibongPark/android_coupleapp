@@ -21,12 +21,9 @@ import com.uber.rib.core.ComposePresenter
 
 class Interactor(
   presenter: ComposePresenter,
-  private val childContent: Router.ChildContent,
 ) : BasicInteractor<ComposePresenter, Router>(presenter) {
 
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
-
-    router.view.setContent { View(childContent = childContent) }
   }
 }
